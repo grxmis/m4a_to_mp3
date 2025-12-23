@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>M4A → MP3 Converter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<!-- ✅ ΣΤΑΘΕΡΗ ffmpeg.wasm -->
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.10.1/dist/ffmpeg.min.js"></script>
+<script src="https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js"></script>
+
+<!-- JSZip -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+
+<div class="page">
+  <div class="card">
+
+    <h1>M4A → MP3</h1>
+    <p class="subtitle">Online Audio Converter</p>
+
+    <label class="file-btn">
+      📂 Επιλογή αρχείων
+      <input type="file" id="files" multiple accept=".m4a">
+    </label>
+
+    <select id="fileList" multiple></select>
+
+    <div class="actions">
+      <button id="removeBtn">Αφαίρεση</button>
+      <button id="convertBtn" class="primary">Μετατροπή</button>
+    </div>
+
+    <div id="status"></div>
+
+  </div>
+</div>
+
+<!-- ⚠️ ΠΑΝΤΑ ΤΕΛΟΣ -->
+<script src="app.js"></script>
+</body>
+</html>
