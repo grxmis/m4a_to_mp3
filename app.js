@@ -1,14 +1,27 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>M4A σε MP3</title>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.11.0/jszip.min.js"></script>
+</head>
+<body>
+<h2>Μετατροπή M4A σε MP3</h2>
+
+<input type="file" id="files" multiple accept=".m4a"><br><br>
+<select id="fileList" size="5" style="width:300px;"></select><br><br>
+<button id="removeBtn">Αφαίρεση επιλεγμένων</button>
+<button id="convertBtn">Μετατροπή</button>
+
+<p id="status"></p>
+
+<script>
 const { createFFmpeg, fetchFile } = FFmpeg;
 
-/*
-  ✅ SINGLE THREAD CORE
-  ❌ ΧΩΡΙΣ worker
-  ❌ ΧΩΡΙΣ SharedArrayBuffer
-  ✅ ΔΟΥΛΕΥΕΙ ΣΕ localhost & Vercel
-*/
 const ffmpeg = createFFmpeg({
   log: true,
-  corePath: "https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js"
+  corePath: "https://unpkg.com/@ffmpeg/core@0.11.6/dist/ffmpeg-core.js"
 });
 
 let files = [];
@@ -60,7 +73,7 @@ async function convert() {
     ffmpeg.FS("writeFile", f.name, await fetchFile(f));
     const out = f.name.replace(/\.m4a$/i, ".mp3");
 
-    await ffmpeg.run("-i", f.name, out);
+    await ffmpeg.run("-i", f.name, "-q:a", "0", out); // -q:a 0 για καλύτερη ποιότητα MP3
 
     const data = ffmpeg.FS("readFile", out);
     zip.file(out, data.buffer);
@@ -76,3 +89,6 @@ async function convert() {
 
   status.innerText = "✅ Ολοκληρώθηκε!";
 }
+</script>
+</body>
+</html>
